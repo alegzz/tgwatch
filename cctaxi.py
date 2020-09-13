@@ -37,7 +37,7 @@ async def doit(event, is_album):
         return
 
     #if any(s in event.raw_text.lower() for s in ('такси', 'uber', 'taxi', 'didi', 'яндекс.go', 'yandex.go', 'яндекс.лавк', 'gett')):
-    if pattern.findall(event.raw_text.lower()):
+    if pattern.findall(event.raw_text.lower()) != []:
          await event.forward_to(taxichan, as_album=True)
 
 @client.on(events.Album)
