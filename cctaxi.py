@@ -3,9 +3,9 @@ from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 from telethon import functions, types
 
 import asyncio
-import logging
+#import logging
 
-logging.basicConfig(filename='cctaxi.log', format='%(asctime)s %(message)s')
+#logging.basicConfig(filename='cctaxi.log', format='%(asctime)s %(message)s')
 
 
 # These example values won't work. You must get your own api_id and
@@ -18,7 +18,7 @@ client = TelegramClient('cctaxi', api_id, api_hash)
 loop = asyncio.get_event_loop()
 
 async def main():
-    dialogs = await client.get_dialogs()
+    await client.get_dialogs()
 
     global taxichan
     taxichan = await client.get_entity('https://t.me/taxinewsb')
@@ -35,7 +35,7 @@ async def doit(event, is_album):
     if to_id['channel_id'] == taxichan.id:
         return
 
-    if any(s in event.raw_text.lower() for s in ('такси', 'uber', 'taxi', 'didi')):
+    if any(s in event.raw_text.lower() for s in ('такси', 'uber', 'taxi', 'didi', 'яндекс.go', 'yandex.go', 'яндекс.лавк')):
          await event.forward_to(taxichan, as_album=True)
 
 @client.on(events.Album)
