@@ -2,6 +2,8 @@ from telethon import TelegramClient, events
 from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 from telethon import functions, types
 
+import re
+
 import asyncio
 #import logging
 
@@ -9,6 +11,8 @@ import asyncio
 
 api_id = 1778565
 api_hash = '32eb07d8b104c61f97bed842234174f2'
+
+pattern = re.compile(r'(такси|taxi|didi|(яндекс|yandex)\.go|(яндекс|yandex)\.лавк|gett|(uber(?!2)))')
 
 client = TelegramClient('cctaxi', api_id, api_hash)
 
@@ -32,7 +36,8 @@ async def doit(event, is_album):
     if to_id['channel_id'] == taxichan.id:
         return
 
-    if any(s in event.raw_text.lower() for s in ('такси', 'uber', 'taxi', 'didi', 'яндекс.go', 'yandex.go', 'яндекс.лавк', 'gett')):
+    #if any(s in event.raw_text.lower() for s in ('такси', 'uber', 'taxi', 'didi', 'яндекс.go', 'yandex.go', 'яндекс.лавк', 'gett')):
+    if pattern.findall(event.raw_text.lower()):
          await event.forward_to(taxichan, as_album=True)
 
 @client.on(events.Album)
