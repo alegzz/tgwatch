@@ -12,7 +12,7 @@ import asyncio
 api_id = 1778565
 api_hash = '32eb07d8b104c61f97bed842234174f2'
 
-pattern = re.compile(r'(такси|taxi|didi|(яндекс|yandex)\.go|(яндекс|yandex)\.лавк|gett|(uber(?!2)))')
+pattern = re.compile(r'(такси|taxi|didi|(яндекс|yandex)\.go|(яндекс|yandex)\.лавк|gett|(uber(?!2))|сити.?мобил)')
 
 client = TelegramClient('cctaxi', api_id, api_hash)
 
