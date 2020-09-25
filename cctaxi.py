@@ -36,7 +36,6 @@ async def doit(event, is_album):
     if to_id['channel_id'] == taxichan.id:
         return
 
-    #if any(s in event.raw_text.lower() for s in ('такси', 'uber', 'taxi', 'didi', 'яндекс.go', 'yandex.go', 'яндекс.лавк', 'gett')):
     if pattern.findall(event.raw_text.lower()) != []:
          await event.forward_to(taxichan, as_album=True)
 
