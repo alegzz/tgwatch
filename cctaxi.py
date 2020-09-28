@@ -1,8 +1,11 @@
 from telethon import TelegramClient, events
 from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 from telethon import functions, types
+from telethon.tl.functions.channels import JoinChannelRequest
 
 import re
+
+#%%
 
 import asyncio
 #import logging
@@ -11,6 +14,10 @@ import asyncio
 
 api_id = 1778565
 api_hash = '32eb07d8b104c61f97bed842234174f2'
+
+admins = []
+
+admins.append(919562137) 
 
 pattern = re.compile(r'(такси|taxi|didi|(яндекс|yandex)\.go|(яндекс|yandex)\.лавк|gett|(uber(?!2))|сити.?мобил)')
 
@@ -29,6 +36,15 @@ async def doit(event, is_album):
         to_id = event.messages[1].to_dict()['to_id']
     else:
         to_id = event.message.to_dict()['to_id']
+
+    if to_id['_'] == 'PeerUser':
+        if to_id['user_id'] in admins:
+            if is_album:
+                chan_id = event.messages[1].to_dict()['from_id']
+            else:
+                chan_id = event.message.to_dict()['from_id']
+            chan = client.get_entity(chan_id)
+            client(JoinChannelRequest(channel))     
 
     if to_id['_'] != 'PeerChannel':
         return
