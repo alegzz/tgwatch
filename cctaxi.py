@@ -43,7 +43,7 @@ async def doit(event, is_album):
                 chan_id = event.messages[1].to_dict()['from_id']
             else:
                 chan_id = event.message.to_dict()['from_id']
-            channnel = client.get_entity(chan_id)
+            channel = client.get_entity(chan_id)
             client(JoinChannelRequest(channel))
             return     
 
