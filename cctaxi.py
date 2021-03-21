@@ -1,31 +1,56 @@
 from telethon import TelegramClient, events
 from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 from telethon import functions, types
+from telethon.tl.functions.channels import JoinChannelRequest
+
+import re
 
 import asyncio
-import logging
+#import logging
+import systemd.daemon
 
-logging.basicConfig(filename='cctaxi.log', format='%(asctime)s %(message)s')
-
+#logging.basicConfig(level=logging.WARNING, filename='cctaxi.log', format='%(asctime)s %(message)s\n-------------------------------------------------------------')
 
 api_id = 1778565
 api_hash = '32eb07d8b104c61f97bed842234174f2'
+
+admins = []
+
+admins.append(125875021) 
+
+pattern = re.compile(r'(т[аa][kк][сc]и|taxi|didi|(яндекс|yandex)\.go|(яндекс|yandex)\.лавк|gett|((?!g)uber(?!2))|сити.?мобил)|\bубер([уе]|\b)')
 
 client = TelegramClient('cctaxi', api_id, api_hash)
 
 loop = asyncio.get_event_loop()
 
 async def main():
-    dialogs = await client.get_dialogs()
+    systemd.daemon.notify('READY=1')
+    await client.get_dialogs()
 
     global taxichan
     taxichan = await client.get_entity('https://t.me/taxinewsb')
 
 async def doit(event, is_album):
     if is_album:
-        to_id = event.messages[1].to_dict()['to_id']
+        to_id = event.messages[0].to_dict()['peer_id']
     else:
-        to_id = event.message.to_dict()['to_id']
+        to_id = event.message.to_dict()['peer_id']
+
+    if pattern.findall(event.raw_text.lower()) != []:
+        logging.warning(event)
+        logging.warning(to_id)
+
+    if to_id['_'] == 'PeerUser':
+        if to_id['user_id'] in admins:
+            if is_album:
+                chan_id = event.messages[0].fwd_from.to_dict()['from_id']
+            else:
+                chan_id = event.message.fwd_from.to_dict()['from_id']
+            logging.warning(chan_id)
+            if chan_id['_'] == 'PeerChannel':
+                channel = await client.get_entity(chan_id['channel_id'])
+                await client(JoinChannelRequest(channel))     
 
     if to_id['_'] != 'PeerChannel':
         return
@@ -33,8 +58,8 @@ async def doit(event, is_album):
     if to_id['channel_id'] == taxichan.id:
         return
 
-    if any(s in event.raw_text.lower() for s in ('такси', 'uber', 'taxi', 'didi')):
-         await event.forward_to(taxichan, as_album=True)
+    if pattern.findall(event.raw_text.lower()) != []:
+         await event.forward_to(taxichan)
 
 @client.on(events.Album)
 async def handler(event):
@@ -49,5 +74,8 @@ async def normal_handler(event):
    
 client.start()
 
-loop.run_until_complete(main())
+#with client:
+#loop.run_until_complete(main())
+#with client:
+client.loop.run_until_complete(main())
 client.run_until_disconnected()
