@@ -8,8 +8,6 @@ import logging
 logging.basicConfig(filename='cctaxi.log', format='%(asctime)s %(message)s')
 
 
-# These example values won't work. You must get your own api_id and
-# api_hash from https://my.telegram.org, under API Development.
 api_id = 1778565
 api_hash = '32eb07d8b104c61f97bed842234174f2'
 
