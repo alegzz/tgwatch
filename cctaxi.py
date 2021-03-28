@@ -37,9 +37,9 @@ async def doit(event, is_album):
     else:
         to_id = event.message.to_dict()['peer_id']
 
-    if pattern.findall(event.raw_text.lower()) != []:
-        logging.warning(event)
-        logging.warning(to_id)
+    #if pattern.findall(event.raw_text.lower()) != []:
+    #    logging.warning(event)
+    #    logging.warning(to_id)
 
     if to_id['_'] == 'PeerUser':
         if to_id['user_id'] in admins:
