@@ -1,3 +1,4 @@
+#!/bin/env python3
 from telethon import TelegramClient, events
 from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 from telethon import functions, types
