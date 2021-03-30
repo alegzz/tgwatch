@@ -1,10 +1,9 @@
 __pycache__
 .secrets.*
+.vscode
 
 cctaxi.session
 cctaxi.session-journal
-
-__pycache__
 
 # Ignore dynaconf secret files
 .secrets.*
