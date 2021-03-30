@@ -55,7 +55,7 @@ async def handler(event):
     return
 
 @client.on(events.NewMessage)
-async def normal_handler(event):
+async def handler(event):
     if event.message.to_dict()['grouped_id'] == None:
         await doit(event, False)
     return
