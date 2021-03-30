@@ -11,6 +11,9 @@ import systemd.daemon
 
 from config import settings
 
+class tgWatch:
+    pass
+
 pattern = re.compile(settings.pattern)
 
 client = TelegramClient(settings.session, settings.api_id, settings.api_hash)
