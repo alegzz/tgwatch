@@ -19,7 +19,7 @@ admins = []
 
 admins.append(125875021) 
 
-pattern = re.compile(r'т[аa][kк][сc]и|taxi|didi|(яндекс|yandex)\.go|(яндекс|yandex)\.лавк|gett|\buber\b|сити.?мобил|\bубер([уе]|\b)')
+pattern = re.compile(r'т[аa][kк][сc]и|taxi|didi|(яндекс|yandex)\.(go|лавк)|gett|\buber\b|сити.?мобил|\bубер(а|е|у|аст)?([уе]|\b)')
 
 client = TelegramClient('cctaxi', api_id, api_hash)
 
