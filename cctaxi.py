@@ -7,21 +7,13 @@ from telethon.tl.functions.channels import JoinChannelRequest
 import re
 
 import asyncio
-#import logging
 import systemd.daemon
 
-#logging.basicConfig(level=logging.WARNING, filename='cctaxi.log', format='%(asctime)s %(message)s\n-------------------------------------------------------------')
+from config import settings
 
-api_id = 1778565
-api_hash = '32eb07d8b104c61f97bed842234174f2'
+pattern = re.compile(settings.pattern)
 
-admins = []
-
-admins.append(125875021) 
-
-pattern = re.compile(r'т[аa][kк][сc]и|taxi|didi|(яндекс|yandex)\.(go|лавк)|gett|\buber\b|сити.?мобил|\bубер(а|е|у|аст)?([уе]|\b)')
-
-client = TelegramClient('cctaxi', api_id, api_hash)
+client = TelegramClient(settings.session, settings.api_id, settings.api_hash)
 
 loop = asyncio.get_event_loop()
 
@@ -30,7 +22,7 @@ async def main():
     await client.get_dialogs()
 
     global taxichan
-    taxichan = await client.get_entity('https://t.me/taxinewsb')
+    taxichan = await client.get_entity(settings.channel)
 
 async def doit(event, is_album):
     if is_album:
@@ -38,17 +30,12 @@ async def doit(event, is_album):
     else:
         to_id = event.message.to_dict()['peer_id']
 
-    #if pattern.findall(event.raw_text.lower()) != []:
-    #    logging.warning(event)
-    #    logging.warning(to_id)
-
     if to_id['_'] == 'PeerUser':
-        if to_id['user_id'] in admins:
+        if to_id['user_id'] in settings.admins:
             if is_album:
                 chan_id = event.messages[0].fwd_from.to_dict()['from_id']
             else:
                 chan_id = event.message.fwd_from.to_dict()['from_id']
-            logging.warning(chan_id)
             if chan_id['_'] == 'PeerChannel':
                 channel = await client.get_entity(chan_id['channel_id'])
                 await client(JoinChannelRequest(channel))     
@@ -75,8 +62,5 @@ async def normal_handler(event):
    
 client.start()
 
-#with client:
-#loop.run_until_complete(main())
-#with client:
 client.loop.run_until_complete(main())
 client.run_until_disconnected()
