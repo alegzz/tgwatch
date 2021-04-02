@@ -1,4 +1,4 @@
 channel = 'https://t.me/taxinewsb'
-pattern = 'т[аa][kк][сc]и|taxi|didi|(яндекс|yandex)\.(go|лавк)|gett|\buber\b|сити.?мобил|\bубер(а|е|у|аст)?([уе]|\b)'
+pattern = 'т[аa][kк][сc]и|taxi|didi|(яндекс|yandex)\.(go|лавк)|gett|\buber\b|сити.?мобил|\bубер(а|е|у|аст)?\b'
 
 admins = [125875021]
