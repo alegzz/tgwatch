@@ -2,8 +2,8 @@ forward_channel = 'https://t.me/taxinewsb'
 pattern = 'т[аa][kк][сc]и|taxi|didi|(яндекс|yandex)\.(go|лавк)|gett|\buber\b|сити.?мобил|\bубер(а|е|у|аст)?\b'
 
 session = 'cctaxi'
-api_id = 12345
+api_id = 1234567
 api_hash = 'hash'
 
 [admins.alegzz]
-id = 12345
+id = 123456
