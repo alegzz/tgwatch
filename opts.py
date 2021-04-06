@@ -1,6 +1,8 @@
 from optparse import OptionParser
 from os import path
 
+from defaults import *
+
 class Options:
     def __init__(self):
         parser = OptionParser()
@@ -10,4 +12,4 @@ class Options:
 
         self.configname = path.abspath(options.configname)
         if not self.configname:
-            self.configname = '/etc/tgwatch/settings.toml'
+            self.configname = configname
