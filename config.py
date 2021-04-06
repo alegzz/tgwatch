@@ -16,7 +16,7 @@ class Settings:
     def __init__(self, configfile):
         self.admins = []
         self.pattern = []
-        self.channel = []
+        self.forward_channel = ''
         self.session = ''
         self.api_id = ''
         self.api_hash = ''
