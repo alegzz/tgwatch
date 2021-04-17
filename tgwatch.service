@@ -1,14 +1,13 @@
 [Unit]
-Description=Catch Taxi Telegram
+Description=Catch Telegram messages
 After=multi-user.target
 Conflicts=getty@tty1.service
  
 [Service]
 Type=simple
-ExecStart=/root/cctaxi/cctaxi.py
+ExecStart=/usr/bin/tgwatch.py
 StandardInput=tty-force
 Restart=Always
-WorkingDirectory=/root/cctaxi
  
 [Install]
 WantedBy=multi-user.target
